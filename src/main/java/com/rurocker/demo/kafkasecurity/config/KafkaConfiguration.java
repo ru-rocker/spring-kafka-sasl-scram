@@ -34,8 +34,8 @@ public class KafkaConfiguration {
     private static final String TRUSTED_PACKAGE = "com.rurocker.demo.kafkasecurity.dto";
 
     private final String jaasTemplate = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";";
-    private final String prodJaasCfg = String.format(jaasTemplate, "producer", "producer-secret");
-    private final String consJaasCfg = String.format(jaasTemplate, "consumer", "consumer-secret");
+    private final String prodJaasCfg = String.format(jaasTemplate, "alice", "alice-secret");
+    private final String consJaasCfg = String.format(jaasTemplate, "bob", "bob-secret");
 
     private String bootstrapAddress;
     private String topicName;

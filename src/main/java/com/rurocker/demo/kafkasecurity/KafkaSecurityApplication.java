@@ -17,7 +17,7 @@ public class KafkaSecurityApplication implements CommandLineRunner {
 
     public static void main(final String[] args) {
         System.setProperty("java.security.auth.login.config",
-                "/Users/it-ops/Documents/java_dev/workspaces/workspace-projects/kafka-security/src/main/resources/jaas.conf");
+                "/var/private/jaas/jaas-spring-client.conf");
         SpringApplication.run(KafkaSecurityApplication.class, args);
     }
 
