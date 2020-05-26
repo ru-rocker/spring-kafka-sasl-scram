@@ -20,7 +20,9 @@ import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.support.serializer.JsonSerializer;
+
+import com.rurocker.demo.kafkasecurity.util.AESDeserializer;
+import com.rurocker.demo.kafkasecurity.util.AESSerializer;
 
 @Configuration
 @ConfigurationProperties(prefix = "kafka.config")
@@ -35,7 +37,7 @@ public class KafkaConfiguration {
 
     private final String jaasTemplate = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";";
     private final String prodJaasCfg = String.format(jaasTemplate, "alice", "alice-secret");
-    private final String consJaasCfg = String.format(jaasTemplate, "bob", "bob-secret");
+    private final String consJaasCfg = String.format(jaasTemplate, "alice", "alice-secret");
 
     private String bootstrapAddress;
     private String topicName;
@@ -97,7 +99,9 @@ public class KafkaConfiguration {
         final Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AESSerializer.class);
+        configProps.put(AESSerializer.AES_SECRET_KEY, "SDGhEh1UEkRBLJXS");
+        configProps.put(AESSerializer.AES_SALT_KEY, "h4R6gewBUPMnS3FZ");
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
         configProps.put(ProducerConfig.CLIENT_ID_CONFIG, "cid1");
         configProps.put("sasl.mechanism", SCRAM_SHA_256);
@@ -120,7 +124,9 @@ public class KafkaConfiguration {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "my-consumer-group");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, AESDeserializer.class);
+        props.put(AESDeserializer.AES_SECRET_KEY, "SDGhEh1UEkRBLJXS");
+        props.put(AESDeserializer.AES_SALT_KEY, "h4R6gewBUPMnS3FZ");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(JsonDeserializer.TRUSTED_PACKAGES, TRUSTED_PACKAGE);
         props.put("sasl.mechanism", SCRAM_SHA_256);

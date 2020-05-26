@@ -17,13 +17,15 @@ public class KafkaSecurityApplication implements CommandLineRunner {
 
     public static void main(final String[] args) {
         System.setProperty("java.security.auth.login.config",
-                "/var/private/jaas/jaas-spring-client.conf");
+        		"/var/private/jaas/jaas-spring-client.conf");
         SpringApplication.run(KafkaSecurityApplication.class, args);
     }
 
     @Override
     public void run(final String... arg0) throws Exception {
         final KafkaProducer kp = context.getBean(KafkaProducer.class);
-        kp.sendMessage(new TestDto(System.currentTimeMillis(), "TEST"));
+        for (int i = 0; i < 2; i++) {
+        	kp.sendMessage(new TestDto(System.currentTimeMillis(), "TEST"));
+		}
     }
 }
