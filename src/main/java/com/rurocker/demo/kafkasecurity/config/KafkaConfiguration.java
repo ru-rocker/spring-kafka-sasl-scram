@@ -37,7 +37,7 @@ public class KafkaConfiguration {
 
     private final String jaasTemplate = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";";
     private final String prodJaasCfg = String.format(jaasTemplate, "alice", "alice-secret");
-    private final String consJaasCfg = String.format(jaasTemplate, "alice", "alice-secret");
+    private final String consJaasCfg = String.format(jaasTemplate, "bob", "bob-secret");
 
     private String bootstrapAddress;
     private String topicName;
