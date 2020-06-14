@@ -17,7 +17,7 @@ public class KafkaProducer {
     private KafkaConfiguration config;
 
     public void sendMessage(final TestDto dto) {
-        kafkaTemplate.send(config.getTopicName(), dto.getTestId().toString(), dto);
+        kafkaTemplate.send(config.getTopicName(), String.valueOf(dto.getTestId()), dto);
     }
 
 }

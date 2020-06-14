@@ -16,8 +16,6 @@ public class KafkaSecurityApplication implements CommandLineRunner {
     private ApplicationContext context;
 
     public static void main(final String[] args) {
-        System.setProperty("java.security.auth.login.config",
-        		"/var/private/jaas/jaas-spring-client.conf");
         SpringApplication.run(KafkaSecurityApplication.class, args);
     }
 
@@ -25,7 +23,8 @@ public class KafkaSecurityApplication implements CommandLineRunner {
     public void run(final String... arg0) throws Exception {
         final KafkaProducer kp = context.getBean(KafkaProducer.class);
         for (int i = 0; i < 2; i++) {
-        	kp.sendMessage(new TestDto(System.currentTimeMillis(), "TEST"));
+        	TestDto td = TestDto.newBuilder().setTestId(System.currentTimeMillis()).setTestName("Test " + i).build();
+        	kp.sendMessage(td);
 		}
     }
 }

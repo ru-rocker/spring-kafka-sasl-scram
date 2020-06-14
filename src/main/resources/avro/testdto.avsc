@@ -1,0 +1,9 @@
+{
+  "namespace": "com.rurocker.demo.kafkasecurity.dto",
+  "type": "record",
+  "name": "TestDto",
+  "fields": [
+    {"name": "testId", "type": "long"},
+    {"name": "testName", "type": ["string", "null"]}
+  ]
+}
