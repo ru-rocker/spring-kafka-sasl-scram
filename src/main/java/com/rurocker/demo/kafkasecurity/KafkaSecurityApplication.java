@@ -23,7 +23,9 @@ public class KafkaSecurityApplication implements CommandLineRunner {
     public void run(final String... arg0) throws Exception {
         final KafkaProducer kp = context.getBean(KafkaProducer.class);
         for (int i = 0; i < 2; i++) {
-        	TestDto td = TestDto.newBuilder().setTestId(System.currentTimeMillis()).setTestName("Test " + i).build();
+        	TestDto td = new TestDto();
+        	td.setTestId(System.currentTimeMillis());
+        	td.setTestName("Test " + i);
         	kp.sendMessage(td);
 		}
     }

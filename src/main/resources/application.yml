@@ -1,6 +1,6 @@
 kafka:
   config:
     bootstrap-address: 192.168.1.110:9092 # use VM mode server
-    topic-name: avro-topic
-    numPartitions: 2
+    topic-name: plain-topic
+    numPartitions: 4
     replicationFactor: 1

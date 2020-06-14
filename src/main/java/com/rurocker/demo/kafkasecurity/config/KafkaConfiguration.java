@@ -20,12 +20,7 @@ import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-
-import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
-import io.confluent.kafka.serializers.KafkaAvroDeserializer;
-import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
-import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @Configuration
 @ConfigurationProperties(prefix = "kafka.config")
@@ -88,11 +83,10 @@ public class KafkaConfiguration {
 		final Map<String, Object> configProps = new HashMap<>();
 		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
+		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 		configProps.put(ProducerConfig.ACKS_CONFIG, "all");
-		configProps.put(ProducerConfig.CLIENT_ID_CONFIG, "avro");
-		configProps.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://192.168.1.110:8081");
-		configProps.put(AbstractKafkaAvroSerDeConfig.AUTO_REGISTER_SCHEMAS, true);
+		configProps.put(ProducerConfig.CLIENT_ID_CONFIG, "snappy-cid");
+//		configProps.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");		
 
 		return new DefaultKafkaProducerFactory<>(configProps);
 	}
@@ -108,10 +102,9 @@ public class KafkaConfiguration {
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, "my-consumer-group");
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
-		props.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, "true");
-		props.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://192.168.1.110:8081");
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		props.put(JsonDeserializer.TRUSTED_PACKAGES, TRUSTED_PACKAGE);
 		return new DefaultKafkaConsumerFactory<>(props);
 	}
 
