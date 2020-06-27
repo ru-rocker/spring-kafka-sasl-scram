@@ -15,7 +15,7 @@ public class TestConsumer {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @KafkaListener(topics = "plain-topic")
+    @KafkaListener(topics = "snappy-topic")
     public void listen(@Payload final TestDto dto, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) final int partition,
             @Header(KafkaHeaders.OFFSET) final long offset) {
         logger.info("receive message with partition {} and offset {}", partition, offset);

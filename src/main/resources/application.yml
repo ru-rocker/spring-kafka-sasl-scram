@@ -1,6 +1,6 @@
 kafka:
   config:
     bootstrap-address: 192.168.1.110:9092 # use VM mode server
-    topic-name: plain-topic
+    topic-name: snappy-topic
     numPartitions: 4
     replicationFactor: 1

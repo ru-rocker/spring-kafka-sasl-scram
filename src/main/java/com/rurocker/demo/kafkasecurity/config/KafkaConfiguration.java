@@ -86,7 +86,7 @@ public class KafkaConfiguration {
 		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 		configProps.put(ProducerConfig.ACKS_CONFIG, "all");
 		configProps.put(ProducerConfig.CLIENT_ID_CONFIG, "snappy-cid");
-//		configProps.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");		
+		configProps.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
 
 		return new DefaultKafkaProducerFactory<>(configProps);
 	}
